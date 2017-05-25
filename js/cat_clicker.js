@@ -36,6 +36,7 @@ var octopus = {
 		// tell our view to initialize
 		catListView.init();
 		catView.init();
+		adminView.init();
 	},
 
 	getCurrentCat: function(){
@@ -54,6 +55,16 @@ var octopus = {
 	incrementCounter: function(){
 		model.currentCat.clickCount++;
 		catView.render();
+	},
+
+	updateCatDetails : function(newCatName, newCatCount, newCatImage){
+		cat = this.getCurrentCat();
+		cat.name = newCatName ;
+		cat.image = newCatImage ;
+		cat.clickCount = newCatCount ;
+		catView.render();
+		catListView.render();
+		adminView.render();
 	}
 };
 
@@ -104,6 +115,40 @@ var catListView = {
 
 			this.catListElem.appendChild(elem);
 		}
+	}
+};
+
+
+var adminView = {
+	init : function(){
+		this.adminForm = document.getElementById('adminForm');
+		this.adminForm.style.visibility = 'hidden';
+		this.newName = document.getElementById('newName');
+		this.newCount = document.getElementById('newCount');
+		this.newImage = document.getElementById('newImage');
+		this.adminButton = document.getElementById('admin');
+		this.updateButton = document.getElementById('update');
+		this.cancelButton = document.getElementById('cancel');
+		this.render();
+	},
+	render : function(){
+		this.adminButton.addEventListener('click', function(){
+		adminForm.style.visibility = 'visible';
+		});
+		this.cancelButton.addEventListener('click', function(){
+		adminForm.style.visibility = 'hidden';
+		});
+
+		// document.console.log(this.newName.value);
+		this.updateButton.addEventListener('click', function(){
+			var newName1 = newName.value;
+			var newImage1 = newImage.value;
+			var newCount1 = newCount.value;
+			console.log(newCount1, newImage1, newName1);
+			octopus.updateCatDetails(newName1, newImage1,newCount1);
+			// window.alert(newName);			
+		});
+
 	}
 };
 
